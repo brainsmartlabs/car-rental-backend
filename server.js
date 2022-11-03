@@ -2,7 +2,11 @@ const dotenv = require('dotenv');
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const { carsRouter } = require('./routes/carsRoute');
+const cookieParser = require('cookie-parser');
+
+const { carRouter } = require('./routes/car-routes.js');
+const { userRouter } = require('./routes/user-routes.js');
+
 
 dotenv.config();
 
@@ -11,8 +15,13 @@ mongoose.connect(`mongodb+srv://car_rental_admin:${process.env.DB_PASSWORD}@clus
     .then(app.listen(process.env.PORT))
     .then(() => { console.log(`DB Connect & App Started at ${process.env.PORT}`) });
 
-app.use(cors());
+
 app.use(express.json());
-app.use('/api/cars/', carsRouter);
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cookieParser());
+
+
+app.use('/api/cars/', carRouter);
+app.use('/api/user', userRouter);
 
 
