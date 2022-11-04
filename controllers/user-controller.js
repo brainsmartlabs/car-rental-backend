@@ -29,7 +29,7 @@ module.exports.signUp = async (req, res) => {
 
     if (exisitingUser)
         return res.status(400).json({
-            'message': 'User Already Exists, Please Login',
+            'message': 'User already exists with this email!',
             'email': 'false'
         });
 
@@ -66,7 +66,7 @@ module.exports.loginUser = async (req, res) => {
 
     if (!exisitingUser)
         return res.status(400).json({
-            'message': 'User Email Does not Exisit',
+            'message': 'Email not registered. Please Sign Up!!',
             'email': 'false',
             'password': 'false'
         });
@@ -75,7 +75,7 @@ module.exports.loginUser = async (req, res) => {
 
     if (!isPasswordCorrect)
         return res.status(400).json({
-            'message': 'Password did not match, Sorry!!',
+            'message': 'Password did not match, Try Again!!',
             'email': 'true',
             'password': 'false'
         });
