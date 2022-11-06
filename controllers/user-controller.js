@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();;
 
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 
 module.exports.getAllUsers = async (req, res) => {
@@ -80,7 +79,7 @@ module.exports.loginUser = async (req, res) => {
             'password': 'false'
         });
 
-    const token = jwt.sign({ id: exisitingUser._id }, JWT_SECRET_KEY, {
+    const token = jwt.sign({ id: exisitingUser._id }, process.env.JWT_SECRET_KEY, {
         algorithm: 'HS256',
         expiresIn: "5d"
     });
@@ -125,6 +124,18 @@ module.exports.getUser = async (req, res) => {
         return res.status(404).json({ 'message': 'User Not Found', 'status': 'invalid' });
 
     return res.status(200).json({ user })
+}
+
+module.exports.logoutUser = async (req, res) => {
+    //const cookies = req.headers.cookie;
+
+    if (req.cookies) {
+        for (key in req.cookies) {
+            res.clearCookie(key);
+        }
+    }
+
+    return res.status(200).json({ message: 'Successfully Logged Out', logout: 'true' });
 }
 
 

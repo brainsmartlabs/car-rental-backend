@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();;
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
 
 module.exports.verifyToken = async (req, res, next) => {
     const cookies = req.headers.cookie;
@@ -13,7 +13,7 @@ module.exports.verifyToken = async (req, res, next) => {
     if (!token)
         return res.status(404).json({ message: "No token found" });
 
-    jwt.verify(String(token), JWT_SECRET_KEY, (error, userToken) => {
+    jwt.verify(String(token), process.env.JWT_SECRET_KEY, (error, userToken) => {
         if (error) {
             return res.status(400).json({ 'message': 'Invalid Token' });
         }
