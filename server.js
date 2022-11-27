@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const { carRouter } = require('./routes/car-routes.js');
 const { userRouter } = require('./routes/user-routes.js');
+const { bookingRouter } = require('./routes/booking-routes.js');
 
 
 dotenv.config();
@@ -23,5 +24,6 @@ app.use(cookieParser());
 
 app.use('/api/cars/', carRouter);
 app.use('/api/user', userRouter);
+app.use('/api/booking', bookingRouter);
 
 
