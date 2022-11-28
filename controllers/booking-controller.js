@@ -9,7 +9,6 @@ module.exports.bookACar = async (req, res) => {
 
     req.body.transactionID = Math.floor((Math.random() * 1000000000)).toString();
 
-
     if (req.id !== req.body.user) {
         return res.status(400).json({ message: 'Un-Autharized Access' });
     }
@@ -36,4 +35,18 @@ module.exports.bookACar = async (req, res) => {
     }
 
     return res.status(200).json({ message: 'Booking Sucesfull', newBooking });
+}
+
+module.exports.getAllBookings = async (req, res) => {
+    let bookings;
+
+    try{
+        bookings = await Booking.find({});
+
+    } catch (error){
+        console.log(err);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+
+    return res.status(200).json({ bookings });
 }
